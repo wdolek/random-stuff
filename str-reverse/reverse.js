@@ -3,15 +3,14 @@
  * @param number start Start index
  * @param number count Number of chars to reverse
  */
-function reverse(chars, start, count) {
-    const end = count - 1;
-    if (start >= end) {
+function reverse(chars, start, end) {
+    if (end - start < 1) {
         return chars;
     }
 
-    const pivot = start + (end - start) / 2;
-    for (let i = start; i < pivot; i++) {
-        swap(chars, i, (end - i));
+    const pivot = Math.trunc((end - start) / 2);
+    for (let i = 0; i <= pivot; i++) {
+        swap(chars, start + i, end - i);
     }
 
     return chars;
@@ -30,7 +29,31 @@ function swap(chars, idxFrom, idxTo) {
     return chars;
 }
 
+/**
+ * @param char char Character to check
+ */
+function isWhiteSpace(char) {
+    return char == ' ' || char == "\t";
+}
+
+/**
+ * @param char[] chars Array of chars
+ */
+function reverseSentence(chars) {
+    let start = 0;
+    for (let i = 0; i < chars.length; i++) {
+        if (isWhiteSpace(chars[i])) {
+            reverse(chars, start, i - 1);
+            start = i + 1;
+        }
+    }
+
+    reverse(chars, start, chars.length - 1);
+
+    return chars;
+}
+
 // act
-let word = 'table'.split('');
+let word = 'this is a table'.split('');
 console.log(word);
-console.log(reverse(word, 0, word.length));
+console.log(reverseSentence(word, 0, word.length));
