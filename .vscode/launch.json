@@ -8,7 +8,13 @@
             "type": "node",
             "request": "launch",
             "name": "str-reverse",
-            "program": "${workspaceFolder}/str-reverse\\reverse.js"
+            "program": "${workspaceFolder}/str-reverse/reverse.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "linked-list",
+            "program": "${workspaceFolder}/linked-list-num-sum/sum.js"
         }
     ]
 }
