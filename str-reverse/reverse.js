@@ -54,6 +54,13 @@ function reverseSentence(chars) {
 }
 
 // act
-let word = 'this is a table'.split('');
-console.log(word);
-console.log(reverseSentence(word, 0, word.length));
+const sentence = 'this is a table'.split('');
+const expected = 'siht si a elbat';
+
+reverseSentence(sentence);
+
+// assert
+const assert = require('assert');
+assert.equal(sentence.join(''), expected);
+
+console.log('done!');
