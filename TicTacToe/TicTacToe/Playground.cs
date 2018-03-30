@@ -117,7 +117,7 @@ namespace TicTacToe
 
             bool FieldEqual(Field f1, Field f2)
             {
-                return f1.Player == f2.Player;
+                return !Player.IsBlank(f1.Player) && f1.Player.Equals(f2.Player);
             }
 
             // try to find winner (rows, cols, diagonales)
