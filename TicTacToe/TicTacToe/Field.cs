@@ -6,7 +6,7 @@ namespace TicTacToe
     /// <summary>
     /// Field representation.
     /// </summary>
-    [DebuggerDisplay("{Index}: {Player.Mark}")]
+    [DebuggerDisplay("{Index}: {Player != null ? Player.Mark.ToString() : \"-\"}")]
     public struct Field
     {
         /// <summary>
