@@ -10,28 +10,65 @@ namespace TicTacToe
         /// <summary>
         /// Blank (dummy) player.
         /// </summary>
-        public static readonly Player Blank = new Player(Guid.Empty, '\0');
+        public static readonly Player Blank = new Player('\0', false);
+
+        /// <summary>
+        /// Player's opponent.
+        /// </summary>
+        private Player _opponent;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Player"/> struct.
         /// </summary>
-        /// <param name="id">Player ID.</param>
         /// <param name="mark">Player mark.</param>
-        public Player(Guid id, char mark)
+        /// <param name="isMaximizing">Whether player should maximize own score.</param>
+        public Player(char mark, bool isMaximizing)
         {
-            Id = id;
             Mark = mark;
+            IsMaximizing = isMaximizing;
         }
-
-        /// <summary>
-        /// Gets player ID.
-        /// </summary>
-        public Guid Id { get; }
 
         /// <summary>
         /// Gets player mark.
         /// </summary>
         public char Mark { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether player should maximize own score.
+        /// </summary>
+        public bool IsMaximizing { get; }
+
+        /// <summary>
+        /// Gets or sets player's opponent.
+        /// </summary>
+        public Player Opponent
+        {
+            get => _opponent;
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                if (ReferenceEquals(this, value))
+                {
+                    throw new ArgumentException("Cannot set self as opponent.", nameof(value));
+                }
+
+                if (Equals(value))
+                {
+                    throw new ArgumentException("Both players are equal.", nameof(value));
+                }
+
+                // save reference to opponent
+                _opponent = value;
+
+                // set opponent's opponent to self
+                // (NB! assign field directly otherwise you end up in infinite setter loop)
+                _opponent._opponent = this;
+            }
+        }
 
         /// <summary>
         /// Determines whether provided player instance is empty.
@@ -46,7 +83,6 @@ namespace TicTacToe
         /// <inheritdoc />
         public bool Equals(Player other) =>
             other != null
-            && Id.Equals(other.Id)
             && Mark == other.Mark;
 
         /// <inheritdoc />
@@ -61,12 +97,7 @@ namespace TicTacToe
         }
 
         /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (Id.GetHashCode() * 397) ^ Mark.GetHashCode();
-            }
-        }
+        public override int GetHashCode() =>
+            Mark.GetHashCode();
     }
 }
