@@ -1,32 +1,45 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace TicTacToe
 {
     /// <summary>
     /// Field representation.
     /// </summary>
-    public class Field
+    [DebuggerDisplay("{Index}: {Player.Mark}")]
+    public struct Field
     {
+        /// <summary>
+        /// Player position.
+        /// </summary>
+        private Player _player;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Player"/> class.
         /// </summary>
-        /// <param name="player">Player occupying field.</param>
-        /// <exception cref="ArgumentException">
-        /// Thrown if given player can't occupy field.
-        /// </exception>
-        public Field(Player player)
+        public Field(int index)
         {
-            if (player == Player.NoPlayer)
-            {
-                throw new ArgumentException("Cannot instantiate field without player.", nameof(player));
-            }
-
-            Player = player;
+            Index = index;
+            _player = null;
         }
 
         /// <summary>
-        /// Gets player occupying field.
+        /// Gets field index.
         /// </summary>
-        public Player Player { get; }
+        public int Index { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether field is not occupied.
+        /// </summary>
+        public bool IsEmpty => _player == null;
+
+        /// <summary>
+        /// Gets or sets player occupying field.
+        /// </summary>
+        public Player Player
+        {
+            get => _player;
+            set => _player = value ?? throw new ArgumentException("Cannot set null player.");
+        }
     }
 }

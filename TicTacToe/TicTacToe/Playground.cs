@@ -14,20 +14,20 @@ namespace TicTacToe
         /// </summary>
         private static readonly (int, int, int)[] WinningCoords =
         {
-            (1, 2, 3), // 1st row
-            (4, 5, 6), // 2nd row
-            (7, 8, 9), // 3rd row
-            (1, 4, 7), // 1st col
-            (2, 5, 8), // 2nd col
-            (3, 6, 9), // 3rd col
-            (1, 5, 9), // top left -> bottom right
-            (3, 5, 7), // bottom left -> upper right
+            (0, 1, 2), // 1st row
+            (3, 4, 5), // 2nd row
+            (6, 7, 8), // 3rd row
+            (0, 3, 6), // 1st col
+            (1, 4, 7), // 2nd col
+            (2, 5, 8), // 3rd col
+            (0, 4, 8), // top left -> bottom right
+            (2, 4, 6), // bottom left -> upper right
         };
 
         /// <summary>
         /// Playground fields.
         /// </summary>
-        private readonly Field[] _field;
+        private readonly Field[] _fields;
 
         /// <summary>
         /// Counter of empty fields remaining (to avoid checking fields array over and over).
@@ -39,8 +39,14 @@ namespace TicTacToe
         /// </summary>
         public Playground()
         {
-            _field = new Field[9];
-            _emptyFields = _field.Length;
+            _fields = new Field[9];
+            _emptyFields = _fields.Length;
+
+            // initialize fields
+            for (var i = 0; i < _fields.Length; i++)
+            {
+                _fields[i] = new Field(i + 1);
+            }
         }
 
         /// <summary>
@@ -49,17 +55,14 @@ namespace TicTacToe
         /// <param name="field">Playground field.</param>
         private Playground(Field[] field)
         {
-            _field = field;
-            _emptyFields = _field.Count(f => f == null);
+            _fields = field;
+            _emptyFields = _fields.Count(f => f.Player == null);
         }
 
         /// <summary>
-        /// Gets empty field indexes.
+        /// Gets all playground fields.
         /// </summary>
-        public IEnumerable<int> EmptyFields =>
-            _field.Select((f, i) => new { Index = i + 1, IsEmpty = f == null })
-                .Where(f => f.IsEmpty)
-                .Select(f => f.Index);
+        public IReadOnlyList<Field> Fields => _fields;
 
         /// <summary>
         /// Performs player turn and gives new playground state.
@@ -69,37 +72,33 @@ namespace TicTacToe
         /// <returns>
         /// New playground state.
         /// </returns>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// Thrown if trying to turn to invalid field.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// Thrown if trying to turn to already taken field.
-        /// </exception>
         public Playground Turn(int index, Player player)
         {
-            if (index < 1 || index > _field.Length)
+            if (index < 1 || index > _fields.Length)
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(index),
-                    $"Invalid turn, allowed index is in range [1..{_field.Length}]");
+                    $"Invalid turn, allowed index is in range [1..{_fields.Length}]");
             }
 
-            if (player == Player.NoPlayer)
+            if (Player.IsBlank(player))
             {
-                return this;
+                throw new ArgumentException("Cannot turn with blank player.", nameof(player));
             }
 
-            if (_field[index - 1] != null)
+            if (!_fields[index - 1].IsEmpty)
             {
                 throw new ArgumentException($"Field {index} is already occupied.", nameof(index));
             }
 
-            var newField = new Field[9];
-            _field.CopyTo(newField, 0);
+            // copying array of structs - copying values
+            var fields = new Field[9];
+            _fields.CopyTo(fields, 0);
 
-            newField[index - 1] = new Field(player);
+            // turn with player
+            fields[index - 1].Player = player;
 
-            return new Playground(newField);
+            return new Playground(fields);
         }
 
         /// <summary>
@@ -118,11 +117,6 @@ namespace TicTacToe
 
             bool FieldEqual(Field f1, Field f2)
             {
-                if (f1 == null || f2 == null)
-                {
-                    return false;
-                }
-
                 return f1.Player == f2.Player;
             }
 
@@ -130,9 +124,9 @@ namespace TicTacToe
             foreach ((int, int, int) i in WinningCoords)
             {
                 (int a, int b, int c) = i;
-                if (FieldEqual(_field[a], _field[b]) && FieldEqual(_field[b], _field[c]))
+                if (FieldEqual(_fields[a], _fields[b]) && FieldEqual(_fields[b], _fields[c]))
                 {
-                    return PlaygroundState.Winner(_field[0].Player);
+                    return PlaygroundState.Winner(_fields[a].Player);
                 }
             }
 

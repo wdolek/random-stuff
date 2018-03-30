@@ -5,19 +5,19 @@ namespace TicTacToe
     /// <summary>
     /// Player representation.
     /// </summary>
-    public struct Player : IEquatable<Player>
+    public class Player : IEquatable<Player>
     {
         /// <summary>
-        /// Empty (dummy) player.
+        /// Blank (dummy) player.
         /// </summary>
-        public static readonly Player NoPlayer = new Player(Guid.Empty, string.Empty);
+        public static readonly Player Blank = new Player(Guid.Empty, '\0');
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Player"/> struct.
         /// </summary>
         /// <param name="id">Player ID.</param>
         /// <param name="mark">Player mark.</param>
-        public Player(Guid id, string mark)
+        public Player(Guid id, char mark)
         {
             Id = id;
             Mark = mark;
@@ -31,33 +31,23 @@ namespace TicTacToe
         /// <summary>
         /// Gets player mark.
         /// </summary>
-        public string Mark { get; }
+        public char Mark { get; }
 
         /// <summary>
-        /// Compares two instances for equality.
+        /// Determines whether provided player instance is empty.
         /// </summary>
-        /// <param name="a">First player.</param>
-        /// <param name="b">Another player.</param>
+        /// <param name="player">Player instance.</param>
         /// <returns>
-        /// Returns <c>true</c> if both players are the same.
+        /// Returns <c>true</c> if player is not set, <c>false</c> otherwise.
         /// </returns>
-        public static bool operator ==(Player a, Player b) =>
-            a.Equals(b);
-
-        /// <summary>
-        /// Compares two instances for inequality.
-        /// </summary>
-        /// <param name="a">First player.</param>
-        /// <param name="b">Another player.</param>
-        /// <returns>
-        /// Returns <c>true</c> if player differs.
-        /// </returns>
-        public static bool operator !=(Player a, Player b) =>
-            !a.Equals(b);
+        public static bool IsBlank(Player player) =>
+            player == null || player.Equals(Blank);
 
         /// <inheritdoc />
         public bool Equals(Player other) =>
-            Id.Equals(other.Id) && string.Equals(Mark, other.Mark);
+            other != null
+            && Id.Equals(other.Id)
+            && Mark == other.Mark;
 
         /// <inheritdoc />
         public override bool Equals(object obj)
@@ -75,7 +65,7 @@ namespace TicTacToe
         {
             unchecked
             {
-                return (Id.GetHashCode() * 397) ^ (Mark != null ? Mark.GetHashCode() : 0);
+                return (Id.GetHashCode() * 397) ^ Mark.GetHashCode();
             }
         }
     }

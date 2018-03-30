@@ -8,12 +8,12 @@
         /// <summary>
         /// Game not completed yet.
         /// </summary>
-        public static readonly PlaygroundState NotComplete = new PlaygroundState(GameState.NotComplete, Player.NoPlayer);
+        public static readonly PlaygroundState NotComplete = new PlaygroundState(GameState.NotComplete, Player.Blank);
 
         /// <summary>
         /// Game completed with tie.
         /// </summary>
-        public static readonly PlaygroundState Tie = new PlaygroundState(GameState.Tie, Player.NoPlayer);
+        public static readonly PlaygroundState Tie = new PlaygroundState(GameState.Tie, Player.Blank);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlaygroundState"/> class.
