@@ -4,7 +4,7 @@ using System.Diagnostics;
 namespace TicTacToe
 {
     /// <summary>
-    /// Field representation.
+    /// Playground field representation.
     /// </summary>
     [DebuggerDisplay("{Index}: {Player != null ? Player.Mark.ToString() : \"-\"}")]
     public struct Field
