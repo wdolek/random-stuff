@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineApp", "MineApp\MineApp.csproj", "{DA2E74B8-F9ED-4C76-AE2D-20DA76E857D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineField", "MineField\MineField.csproj", "{0A6D6D11-DFF9-4302-BFAA-0932A70DB59E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineField.Tests", "MineField.Tests\MineField.Tests.csproj", "{9558DDB1-4900-4256-8882-D06863A62266}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA2E74B8-F9ED-4C76-AE2D-20DA76E857D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA2E74B8-F9ED-4C76-AE2D-20DA76E857D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA2E74B8-F9ED-4C76-AE2D-20DA76E857D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA2E74B8-F9ED-4C76-AE2D-20DA76E857D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A6D6D11-DFF9-4302-BFAA-0932A70DB59E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A6D6D11-DFF9-4302-BFAA-0932A70DB59E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A6D6D11-DFF9-4302-BFAA-0932A70DB59E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A6D6D11-DFF9-4302-BFAA-0932A70DB59E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9558DDB1-4900-4256-8882-D06863A62266}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9558DDB1-4900-4256-8882-D06863A62266}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9558DDB1-4900-4256-8882-D06863A62266}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9558DDB1-4900-4256-8882-D06863A62266}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
