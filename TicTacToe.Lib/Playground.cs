@@ -5,23 +5,33 @@ using System.Linq;
 namespace TicTacToe
 {
     /// <summary>
-    /// Playground representation.
+    /// Playground representation of 3x3 game.
     /// </summary>
     public class Playground
     {
         /// <summary>
-        /// Array of winning coord tuples.
+        /// Number of playground fields.
         /// </summary>
-        private static readonly (int, int, int)[] WinningCoords =
+        private const int NumberOfFields = 9;
+
+        /// <summary>
+        /// Minimum number of fields to be taken to win.
+        /// </summary>
+        private const int MinimumFieldsToWin = 4;
+
+        /// <summary>
+        /// Array of winning coords.
+        /// </summary>
+        private static readonly int[][] WinningCoords =
         {
-            (0, 1, 2), // 1st row
-            (3, 4, 5), // 2nd row
-            (6, 7, 8), // 3rd row
-            (0, 3, 6), // 1st col
-            (1, 4, 7), // 2nd col
-            (2, 5, 8), // 3rd col
-            (0, 4, 8), // top left -> bottom right
-            (2, 4, 6), // bottom left -> upper right
+            new[] { 0, 1, 2 }, // 1st row
+            new[] { 3, 4, 5 }, // 2nd row
+            new[] { 6, 7, 8 }, // 3rd row
+            new[] { 0, 3, 6 }, // 1st col
+            new[] { 1, 4, 7 }, // 2nd col
+            new[] { 2, 5, 8 }, // 3rd col
+            new[] { 0, 4, 8 }, // top left \ bottom right
+            new[] { 2, 4, 6 }, // bottom left / upper right
         };
 
         /// <summary>
@@ -39,7 +49,7 @@ namespace TicTacToe
         /// </summary>
         public Playground()
         {
-            _fields = new Field[9];
+            _fields = new Field[NumberOfFields];
             _emptyFields = _fields.Length;
 
             // initialize fields
@@ -81,7 +91,7 @@ namespace TicTacToe
                     $"Invalid turn, allowed index is in range [1..{_fields.Length}]");
             }
 
-            if (Player.IsBlank(player))
+            if (Player.IsNullOrBlank(player))
             {
                 throw new ArgumentException("Cannot turn with blank player.", nameof(player));
             }
@@ -109,21 +119,21 @@ namespace TicTacToe
         /// </returns>
         public PlaygroundState GetState()
         {
-            // player can win in 5th turn in the best case
-            if (_emptyFields > 4)
+            if (_emptyFields > MinimumFieldsToWin)
             {
                 return PlaygroundState.NotComplete;
             }
 
             bool FieldEqual(Field f1, Field f2)
             {
-                return !Player.IsBlank(f1.Player) && f1.Player.Equals(f2.Player);
+                return !Player.IsNullOrBlank(f1.Player) && f1.Player.Equals(f2.Player);
             }
 
-            // try to find winner (rows, cols, diagonales)
-            foreach ((int, int, int) i in WinningCoords)
+            foreach (int[] wc in WinningCoords)
             {
-                (int a, int b, int c) = i;
+                int a = wc[0];
+                int b = wc[1];
+                int c = wc[2];
                 if (FieldEqual(_fields[a], _fields[b]) && FieldEqual(_fields[b], _fields[c]))
                 {
                     return PlaygroundState.Winner(_fields[a].Player);

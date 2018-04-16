@@ -33,7 +33,7 @@ namespace TicTacToe
         /// <returns>
         /// Returns <c>true</c> if player is not set, <c>false</c> otherwise.
         /// </returns>
-        public static bool IsBlank(Player player) =>
+        public static bool IsNullOrBlank(Player player) =>
             player == null || player.Equals(Blank);
 
         /// <inheritdoc />
