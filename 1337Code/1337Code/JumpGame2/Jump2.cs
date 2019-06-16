@@ -1,6 +1,6 @@
 ﻿namespace _1337Code.JumpGame2
 {
-    // https://leetcode.com/problems/jump-game-ii/submissions/
+    // https://leetcode.com/problems/jump-game-ii/
     public sealed class Jump2
     {
         public int Jump(int[] nums)
