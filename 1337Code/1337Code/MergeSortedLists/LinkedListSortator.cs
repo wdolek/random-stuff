@@ -52,10 +52,12 @@ namespace _1337Code.MergeSortedLists
             var head = new ListNode(0);
             var point = head;
 
+            // do "stitching" between two linked lists
             while (left != null && right != null)
             {
                 // find smaller value,
-                // move pointer on node which contained smaller value
+                // -> set lower value to be next after current point
+                // -> move node to its next linked node
                 if (left.val < right.val)
                 {
                     point.next = left;
@@ -67,7 +69,7 @@ namespace _1337Code.MergeSortedLists
                     right = right.next;
                 }
 
-                // effectively setting `next` on either `left` or `right`
+                // -> move current point to its next
                 point = point.next;
             }
 
