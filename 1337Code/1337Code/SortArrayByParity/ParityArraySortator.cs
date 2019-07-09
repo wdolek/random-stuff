@@ -48,5 +48,43 @@ namespace _1337Code.SortArrayByParity
 
             return A;
         }
+
+        public unsafe int[] SortArrayByParityUnsafe(int[] A)
+        {
+            if (A == null || A.Length == 0)
+            {
+                return Array.Empty<int>();
+            }
+
+            var i = 0;
+            var j = A.Length - 1;
+
+            // fix input array in memory
+            fixed (int* a = A)
+            {
+                while (i < j)
+                {
+                    if (a[i] % 2 == 0)
+                    {
+                        ++i;
+                    }
+
+                    if (a[i] % 2 != 0)
+                    {
+                        SwapPtrs(&a[i], &a[j]);
+                        --j;
+                    }
+                }
+            }
+
+            return A;
+        }
+
+        private static unsafe void SwapPtrs(int* a, int* b)
+        {
+            var tmp = *a;
+            *a = *b;
+            *b = tmp;
+        }
     }
 }
