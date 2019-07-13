@@ -37,6 +37,26 @@ namespace _1337Code.Tests.SortArrayByParity
             AssertParity(expected, result);
         }
 
+        [Theory]
+        [MemberData(nameof(GenerateTestData))]
+        public void SortItemsByParityRefs(int[] input, int[] expected)
+        {
+            var sortator = new ParityArraySortator();
+            var result = sortator.SortArrayByParityRefs(input);
+
+            AssertParity(expected, result);
+        }
+
+        [Theory]
+        [MemberData(nameof(GenerateTestData))]
+        public void SortItemsByParityRefSpan(int[] input, int[] expected)
+        {
+            var sortator = new ParityArraySortator();
+            var result = sortator.SortArrayByParityRefSpan(input);
+
+            AssertParity(expected, result);
+        }
+
         [Fact(DisplayName = "Test of util method: Verify order of odd/evens does not matter when asserting")]
         public void TestAssertParity()
         {
